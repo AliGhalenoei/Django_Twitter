@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %} Home {% endblock %}
+
+{% block link %} {% endblock %}
+
+{% block body %}
+<br><br>
+<div class="card mb-3" style="max-width: 540px; display: inline-block; margin-left: 20px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{user.img.url}}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">UserName : {{user.username}}</h5>
+          <p class="card-text">{{user.bio}}</p>
+          <p class="card-text"><small class="text-body-secondary">{{follwers}} Follwers &nbsp;&nbsp;&nbsp;&nbsp;{{follwing}} Follwing</small></p>
+          
+          <a href="{% url 'follw' user.id %}" class="btn btn-primary"  style="float: right;">Follw</a>
+          <a href="{% url 'unfollw' user.id %}" class="btn btn-danger" style="float: right;">UnFollw</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if user.id == request.user.id %}
+  <div class="card w-20 mb-2" style="display: inline-block; float: right; width: 430px; margin-right: 15px;">
+    <div class="card-body">
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+      <h5 class="card-title">Edit Profile</h5>
+      
+      {{form.username}} <br><br>
+      {{form.email}} <br><br>
+      {{form.bio}} <br><br>
+      {{form.img}} <br><br>
+      <input type="submit" class="btn btn-primary" value="Edit" style="width: 100%;">
+    </form>
+    </div>
+  </div>
+  {%endif%} <br>
+
+  {% for twit in twits %}
+  <div class="card text-center" style="width: 540px; margin-left: 20px;">
+    
+    <div class="card-body" style="text-align: left;">
+      <h5 class="card-title">{{twit.description|truncatewords:7}}</h5><br>
+      {% if twit.user == request.user %}
+      <a href="{% url 'edit_twit' twit.id %}" class="btn btn-primary">Edit</a>      
+      <a href="{% url 'delete_twit' twit.id %}" class="btn btn-danger">Delete</a>
+      {%endif%}      
+    </div>
+    <div class="card-footer text-body-secondary">
+      <a href="{% url 'detail_twit' twit.id %}" style="text-decoration: none;">More...</a>
+    </div>
+  </div><br>
+  {%endfor%}
+{% endblock %}

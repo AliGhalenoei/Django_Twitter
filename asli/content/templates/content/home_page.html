@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %} Home {% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'content/css/home.css /' %}">
+    <link rel="stylesheet" href="{% static 'content/css/detail.css /' %}">
+{% endblock %}
+
+{% block body %}
+<br><br>
+    {% for twit in twits %}
+        <div class="card">
+            <a href="{% url 'profile' twit.user.id %}"><img  src="{{twit.user.img.url}}" alt="" style="width: 50px; border-radius: 50%; vertical-align: top; display: inline-block;"></a>
+            <a href="{% url 'profile' twit.user.id %}"><h6 style="display: inline-block; position: relative; right: -55px; top: -39px;">{{twit.user.username}}</h6></a><br>
+            <p style="position: relative; top: -20px;">{{twit.description}}</p>
+            {% if twit.img %}
+                <div class="img_twit">
+                    <img class="card-img-top" src="{{twit.img.url}}" alt="" style="width: 300px; position: relative; right: -85px;">
+                </div>
+            {%endif%} 
+                <a href="{% url 'save_twit' twit.id %}"> <img src="{%static 'content/images/icons8-save-50.png/'%}" alt="" style="width: 30px; float: right; position: relative; bottom: -13px; left: -80px;"></a>
+                <a href="{% url 'like' twit.id %}"> <img src="{%static 'content/images/icons8-like-50 (1).png/'%}" alt="" style="width: 30px; position: relative; top: -20px; right: -80px;"></a>
+                <a href="{% url 'detail_twit' twit.id %}"> <img src="{%static 'content/images/chat.png/'%}" alt="" style="width: 30px; position: relative; top: -49px; right: -120px;"></a>
+            </div><br>
+            
+            {%endfor%}
+            
+{% endblock %}

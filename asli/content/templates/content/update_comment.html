@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %} Home {% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'content/css/home.css /' %}">
+{% endblock %}
+
+{% block body %}
+<br><br>
+    <form action="" method="post">
+        {%csrf_token%}
+            {{form}}
+    </form>
+{% endblock %}

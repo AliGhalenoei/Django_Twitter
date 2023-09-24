@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %} Home {% endblock %}
+
+{% block link %}
+    
+{% endblock %}
+
+{% block body %}
+<br><br>
+   
+    {% for twit in twits %}
+    <a href="{% url 'detail_twit' twit.twit.id %}" style="text-decoration: none; color: black;">
+        <div class="card" style="width: 18rem; margin-left: 15px; display: inline-block;">
+            <img src="{{twit.twit.img.url}}" class="card-img-top" alt="..." style="width: 285px;">
+            <div class="card-body">
+                <!-- <h5 class="card-title">Card title</h5> -->
+                <p class="card-text">{{twit.twit.description|truncatewords:7}}</p>
+                <a href="{% url 'unsave_twit' twit.twit.id %}" style="float: right;"> <img src="{% static 'content/images/delete.png/'%}" alt="" style="width: 20px;"> </a>
+                
+            </div>
+        </div>
+    </a>
+    {%endfor%}
+{% endblock %}
